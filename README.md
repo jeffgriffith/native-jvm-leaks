@@ -58,7 +58,7 @@ We're not ready to fire it up yet! First we need to define what kind of output j
 ```
 export MALLOC_CONF=prof:true,lg_prof_interval:31,lg_prof_sample:17,prof_prefix:/my/output/directory/jeprof
 ```
-Some explanation of the numbers here. The 31 in this case is the log base 2 of the interval in bytes between allocations that we want jemalloc to report. That's right, log base 2, as though profiling native memory allocation weren't already difficult enough without requiring us to do math. In this case 2^31 is about 2GB, so every 2GB of memory allocation, we'll get a .heap output file specified in the prof_prefix location. Make sure /my/output/directory exists and is writable by your process and you'll get a lot of files named /my/output/directory/jeprof*.heap These are the haystacks that jeprof will dig through to find our needle.
+Some explanation of the numbers here. The 31 in this case is the log base 2 of the interval in bytes between allocations that we want jemalloc to report. Whaaaa?! That's right, log base 2, as though profiling native memory allocation weren't already difficult enough without requiring us to do math. In this case 2^31 is about 2GB, so every 2GB of memory allocation, we'll get a .heap output file specified in the prof_prefix location. Make sure /my/output/directory exists and is writable by your process and you'll get a lot of files named /my/output/directory/jeprof*.heap These are the haystacks that jeprof will dig through to find our needle.
 
 Let 'er rip!
 ------------
