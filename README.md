@@ -39,7 +39,7 @@ I took the file jemalloc-4.1.0.tar.bz2 for my testing. Be careful not to collide
 make
 sudo make install
 ```
-The install step will write the .so files and utilities such as jeprof to /usr/local/... See the caveat above about not clobbing some existing installation. After this step, you will have jemalloc library as well as its profiling utility installed here:
+The install step will write the .so files and utilities such as jeprof to /usr/local/... See the caveat above about not clobbering some existing installation. After this step, you will have jemalloc library as well as its profiling utility installed here:
 ```
 /usr/local/lib/libjemalloc.so
 /usr/local/bin/jeprof
