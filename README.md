@@ -62,7 +62,7 @@ Some explanation of the numbers here. The 31 in this case is the log base 2 of t
 
 Let 'er rip!
 ------------
-Restart your JVM and confirm from your logging that you haven't destroyed your production node. In my own experience, I have seen no obvious slowdown even under heavy load in production. Observe /my/output/directory for a while to see if your .heap files start showing up. To test out your config, you could lower the lg_prof_interval just to confirm your setup before changing it to some reasonable number. In my setup, the .heap files were roughly 90K each so you'll want to monitor the disk usage there if you're going to be running for a long period of time.
+Restart your JVM and confirm from your logging that you haven't destroyed your production node and left your users wondering what it was that happened because they cameraman just kept on filming! If your logs are spewing nonsense like Donald Trump at a klan rally, just back out the environment variables and restart. In my own experience, though, I have seen no errors and no obvious slowdown even under heavy load in production. Observe /my/output/directory for a while to see if your .heap files start showing up. To test out your config, you could lower the lg_prof_interval just to confirm your setup before changing it to some reasonable number. In my setup, the .heap files were roughly 90K each so you'll want to monitor the disk usage there if you're going to be running for a long period of time.
 
 Finding the needle
 ------------------
