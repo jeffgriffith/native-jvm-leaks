@@ -74,15 +74,15 @@ jeprof --show_bytes --gif \
 ```
 Copy that gif back to some machine where you can view it. With any luck, the heavens will open, the sun will shine, and a little tear will form at the corner of your eye as you finally glimpse the place where those gigabytes are being stashed away. It may not be the EXACT location of the leak since this is native code. Don't expect java classnames, those are hidden inside the Java runtime. I'm still looking into ways of finding out those links, but with any luck, the naming in the native code will give you a clue. In my case for example, I can see that the function was named: Java_sun_java2d_cmm_kcms_CMM_cmmGetTransform which clued me in to the Java2D graphics library we use. Here was my output:
 
-![jeprof1] (jeprof-1.jpg)
+<img src="jeprof-1.jpg" alt="jeprof1" width="500px">
 
 And here we are zoomed in at the top of that branch:
 
-![jeprof2] (jeprof-2.jpg)
+<img src="jeprof-2.jpg" alt="jeprof2" width="500px">
 
 In my case, I made a change to a single node in a small four-node cluster then plotted the effect over time. It looks like there may still be a leak there but jemalloc clearly went straight to the heart of the problem.
 
-![Resident size](resident.jpg)
+<img src="resident.jpg" alt="resident" width="500px">
 
 More to come
 ------------
