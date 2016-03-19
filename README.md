@@ -95,3 +95,5 @@ I got started in this looking at these two blog posts which are great reading. C
 [GDS](https://gdstechnology.blog.gov.uk/2015/12/11/using-jemalloc-to-get-to-the-bottom-of-a-memory-leak/)
 
 [Twitter](http://www.evanjones.ca/java-native-leak-bug.html)
+
+[Email me with comments](mailto:jeffery.griffith@gmail.com)
