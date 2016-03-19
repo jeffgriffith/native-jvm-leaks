@@ -129,6 +129,6 @@ References
 I got my inspiration from the two blogs below and tried to build on what they have done. I hope you'll check them out! I can be reached [here](mailto:jeffery.griffith@gmail.com) for any questions/comments.
 
 
-[GDS](https://gdstechnology.blog.gov.uk/2015/12/11/using-jemalloc-to-get-to-the-bottom-of-a-memory-leak/),
-[Twitter](http://www.evanjones.ca/java-native-leak-bug.html)
+[Technology at GDS](https://gdstechnology.blog.gov.uk/2015/12/11/using-jemalloc-to-get-to-the-bottom-of-a-memory-leak/),
+[Martin Evans](http://www.evanjones.ca/java-native-leak-bug.html)
 
