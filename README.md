@@ -3,7 +3,7 @@
 Anatomy of a memory leak - debugging native memory leaks in the JVM
 ===================================================================
 
-So you're certain you have no memory leaks in your Java application yet your process defies all limits you've set for it, max heap, max stack size, even max direct memory. It grows and grows until you run the machine out of memory. Unfortunately there are a lot of cases in Java where native memory allocation is invisible to the JVM, whether it's inside JNI code or memory allocated directly from the core native Java implemtation . This can leave you scratching your head and guessing at where you may have opened some resource and failed to close it. I spent a week debugging my current problem until I discovered jemalloc which I'll discuss in a minute.
+So you're certain you have no memory leaks in your Java application yet your process defies all limits you've set for it, max heap, max stack size, even max direct memory. It grows and grows until you run the machine out of memory. Unfortunately there are a lot of cases in Java where native memory allocation is invisible to the JVM, whether it's inside JNI code or memory allocated directly from the core native Java implementation . This can leave you scratching your head and guessing at where you may have opened some resource and failed to close it. I spent a week debugging my current problem until I discovered jemalloc which I'll discuss in a minute.
 
 What exactly IS an off-heap leak?
 ---------------------------------
