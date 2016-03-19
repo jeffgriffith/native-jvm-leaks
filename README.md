@@ -126,10 +126,9 @@ In my case, I fixed a single node in a small four-node cluster then plotted the 
 
 References
 ----------
-I got started in this looking at these two blog posts which are great reading. Check them out!
+I got my inspiration from the two blobs below and tried to build on what they had done. I hope you'll check them out! I can be reached [here](mailto:jeffery.griffith@gmail.com) for any questions/comments.
+
 
 [GDS](https://gdstechnology.blog.gov.uk/2015/12/11/using-jemalloc-to-get-to-the-bottom-of-a-memory-leak/)
-
 [Twitter](http://www.evanjones.ca/java-native-leak-bug.html)
 
-I hope this helps! Feel free to email me with questions/comments/suggestions [here](mailto:jeffery.griffith@gmail.com)
