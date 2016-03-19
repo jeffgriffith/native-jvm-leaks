@@ -80,7 +80,7 @@ And here we are zoomed in at the top of that branch:
 
 <img src="jeprof-2.jpg" alt="jeprof2" width="500px">
 
-As I said the kcms packaged clued me in as to where the problem might be, but can we tell exactly who is calling that cmmGetTransform method? There may be better ways, but it was suggested (see GDS below) to find the call with a stack trace, so I gave that a try. There is no guarantee you will catch it in one try so I did a little scripting to continuous stack dumps of my JVM and grepping for "cmmGetTransform".
+As I said the kcms packaged clued me in as to where the problem might be, but can we tell exactly who is calling that cmmGetTransform method? There may be better ways, but it was suggested (see GDS below) to find the call with a stack trace, so I gave that a try. There is no guarantee you will catch it in one try so I did a little scripting to take continuous stack traces of my JVM and grepping for "cmmGetTransform".
 ```
 #!/bin/bash
 
