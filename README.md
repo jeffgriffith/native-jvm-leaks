@@ -80,11 +80,31 @@ And here we are zoomed in at the top of that branch:
 
 <img src="jeprof-2.jpg" alt="jeprof2" width="500px">
 
-As I said the kcms packaged clued me in as to where the problem might be, but can we tell exactly who is calling that cmmGetTransform method? There may be smarter wayts, but it was suggested (see GDS below) to find the call with a stack trace, so I gave that a try. There is no guarantee you will catch it in one try so I did a little scripting to continuous stack dumps of my JVM and grepping for "cmmGetTransform".
+As I said the kcms packaged clued me in as to where the problem might be, but can we tell exactly who is calling that cmmGetTransform method? There may be better ways, but it was suggested (see GDS below) to find the call with a stack trace, so I gave that a try. There is no guarantee you will catch it in one try so I did a little scripting to continuous stack dumps of my JVM and grepping for "cmmGetTransform".
 ```
-jstack process-id | tee stack.txt | grep cmmTransform
+jstack#!/bin/bash
+
+PID=19467
+SEARCH_FOR=cmmGetTransform
+
+for i in {1..10}; do
+   echo "Iteration ${i}"
+   jstack ${PID} | tee stack-${i}.txt | grep "${SEARCH_FOR}"
+done
 ```
-Do that until you get a hit then look for the stack trace in stack.txt. If you're unable to do this manually then just do a little scripting to do it at high speed to increase your odds. Here was the Java stack I found that made the transition from Java land, into native code where the memory was collecting:
+I ran with 10 iterations and got one hit. Mileage may vary depending on your call frequency of course so you may have to run it many iterations and perhaps you'll even have multiple leaky calls to the same native entry point. Here was my output
+```
+sh-4.1$ ./find-native.sh
+Iteration 1
+Iteration 2
+Iteration 3
+Iteration 4
+	at sun.java2d.cmm.kcms.CMM.cmmGetTransform(Native Method)
+Iteration 5
+...
+Iteration 10
+```
+Here was the Java stack I found that made the transition from Java land, into native code where the memory was collecting:
 ```
 "Thread-539618" #539764 daemon prio=5 os_prio=0 tid=0x00007f6585b31000 nid=0x92fd runnable [0x00007f6b6f9f7000]
    java.lang.Thread.State: RUNNABLE
