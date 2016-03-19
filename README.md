@@ -72,7 +72,7 @@ jeprof --show_bytes --gif \
 /home/y/share/yjava_jdk/java/bin/java \
 /my/output/directory/jeprof-blah-blah.heap > output.gif
 ```
-Copy that gif back to some machine where you can view it. With any luck, the heavens will open, the sun will shine, and a little tear will form at the corner of your eye as you finally glimpse the place where those gigabytes are being stashed away. It may not be the EXACT location of the leak since this is native code. Don't expect java classnames, those are hidden inside the Java runtime. I'm still looking into ways of finding out those links, but with any luck, the naming in the native code will give you a clue. In my case for example, I can see that the function was named: Java_sun_java2d_cmm_kcms_CMM_cmmGetTransform which clued me in to the Java2D graphics library we use. Here was my output:
+Copy that gif back to some machine where you can view it. With any luck, the heavens will open, the sun will shine, and a little tear will form at the corner of your eye as you finally glimpse the place where those gigabytes are being stashed away. It may not be the EXACT location of the leak since this is native code. Don't expect a neat Java stacktrace, those are hidden inside the Java runtime except for where Java calls into native code. With any luck, the naming in the native code will give you a clue as to which Java class is calling it (either your own or some third party). In my case for example, I can see that the function was named: Java_sun_java2d_cmm_kcms_CMM_cmmGetTransform which clued me in to the Java2D graphics library we use. Here was my output:
 
 <img src="jeprof-1.jpg" alt="jeprof1" width="500px">
 
@@ -80,13 +80,29 @@ And here we are zoomed in at the top of that branch:
 
 <img src="jeprof-2.jpg" alt="jeprof2" width="500px">
 
-In my case, I made a change to a single node in a small four-node cluster then plotted the effect over time. It looks like there may still be a leak there but jemalloc clearly went straight to the heart of the problem.
+As I said the kcms packaged clued me in as to where the problem might be, but can we tell exactly who is calling that cmmGetTransform method? There may be smarter wayts, but it was suggested (see GDS below) to find the call with a stack trace, so I gave that a try. There is no guarantee you will catch it in one try so I did a little scripting to continuous stack dumps of my JVM and grepping for "cmmGetTransform".
+```
+jstack process-id | tee stack.txt | grep cmmTransform
+```
+Do that until you get a hit then look for the stack trace in stack.txt. If you're unable to do this manually then just do a little scripting to do it at high speed to increase your odds. Here was the Java stack I found that made the transition from Java land, into native code where the memory was collecting:
+```
+"Thread-539618" #539764 daemon prio=5 os_prio=0 tid=0x00007f6585b31000 nid=0x92fd runnable [0x00007f6b6f9f7000]
+   java.lang.Thread.State: RUNNABLE
+        at sun.java2d.cmm.kcms.CMM.cmmGetTransform(Native Method)
+        at sun.java2d.cmm.kcms.CMM.createTransform(CMM.java:146)
+        at java.awt.image.ColorConvertOp.filter(ColorConvertOp.java:540)
+        at com.sun.imageio.plugins.jpeg.JPEGImageReader.acceptPixels(JPEGImageReader.java:1268)
+        at com.sun.imageio.plugins.jpeg.JPEGImageReader.readImage(Native Method)
+        at com.sun.imageio.plugins.jpeg.JPEGImageReader.readInternal(JPEGImageReader.java:1236)
+        at com.sun.imageio.plugins.jpeg.JPEGImageReader.read(JPEGImageReader.java:1039)
+        at javax.imageio.ImageIO.read(ImageIO.java:1448)
+        at javax.imageio.ImageIO.read(ImageIO.java:1352)
+        ....my application code...
+```
+
+In my case, I fixed a single node in a small four-node cluster then plotted the effect over time. It looks like there may still be a leak there but jemalloc clearly went straight to the heart of the problem.
 
 <img src="resident.jpg" alt="resident" width="500px">
-
-More to come
-------------
-I'm working on how to tie those allocation addresses back to real locations in the JVM. Stay tuned.
 
 References
 ----------
@@ -96,4 +112,4 @@ I got started in this looking at these two blog posts which are great reading. C
 
 [Twitter](http://www.evanjones.ca/java-native-leak-bug.html)
 
-[Email me with comments](mailto:jeffery.griffith@gmail.com)
+I hope this helps! Feel free to email me with questions/comments/suggestions [here](mailto:jeffery.griffith@gmail.com)
