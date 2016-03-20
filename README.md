@@ -23,8 +23,8 @@ So your heap looks good, you can't find any off-heap references, the JVM claims 
 
 That said, it's probably more likely you have a real leak in native code. Much of the java code itself is native and so, if misused (and sometimes even if not), may not be visible at all to the JVM. This is the problem we are trying to solve here.
 
-JEMALLOC saves the day!
------------------------
+Going native with jemalloc
+--------------------------
 jemalloc is an alternative to the standard malloc in the C library. This alternate implementation was created with the focus of high performance in a highly threaded environment such as ours as well as an attempt to improve on memory fragmentation. Groups at Facebook and Twitter have blogged about its use operationally. But its performance is not my reason for discussing it here. It just happens to come with some great profiling capabilities that can help us track down where all our memory is being consumed, so let's stop the chit-chat and get down to business!
 
 Building
