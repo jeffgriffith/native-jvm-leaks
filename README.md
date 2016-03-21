@@ -126,7 +126,7 @@ In my case, I fixed a single node in a small four-node cluster then plotted the 
 
 References
 ----------
-I got my inspiration from the two blogs below and tried to build on what they have done. I hope you'll check them out! I can be reached [here](https://twitter.com/jefferygriffith) for any questions/comments.
+I got my inspiration from the two blogs below and tried to build on what they have done. I hope you'll check them out! Follow me  [here](https://twitter.com/jefferygriffith) on Twitter.
 
 
 [Technology at GDS](https://gdstechnology.blog.gov.uk/2015/12/11/using-jemalloc-to-get-to-the-bottom-of-a-memory-leak/),
